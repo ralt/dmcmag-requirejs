@@ -1,0 +1,1 @@
+define([],function(){function a(){document.body.onclick=function(a){var b=a.target;if(!!~b.className.indexOf("title")){var c=b.nextElementSibling,d=document.getElementsByClassName("content");[].forEach.call(d,function(a){a!==c&&(a.hidden=!0)}),c.hidden=!c.hidden}}}return{init:a}})

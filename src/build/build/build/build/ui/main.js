@@ -1,0 +1,1 @@
+define(["ui/accordions"],function(a){function b(){a.init()}return{init:b}})

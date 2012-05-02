@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Aïda</title>
+        <link href="bootstrap.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body class="container">
+        <div class="well">
+            <h1>Liste de réceptifs</h1>
+        </div>
+        <img src="img/ajax-loader.gif" width="128" height="15" alt="Loading..." id="loading-dmcs" />
+        <div id="container">
+        </div>
+        <div id="loading-pagination">
+            Loading pagination
+            <img src="img/ajax-pagination.gif" width="" height="" alt="Loading..." />
+        </div>
+        <div id="pagination" class="pagination">
+            <ul>
+                <li class="prev disabled" id="first"><a href="#">Précédent</a></li>
+                <li class="next" id="last"><a href="#">Suivant</a></li>
+            </ul>
+        </div>
+        <div class="well">
+            <div class="footer">Copyright © TourMaG.com 2012</div>
+        </div>
+        <script data-main="src/main" src="src/require.js"></script>
+    </body>
+</html>
+

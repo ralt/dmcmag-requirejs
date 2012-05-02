@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+}
+
+.title {
+    margin: 1em;
+    cursor: pointer;
+}
+
+#loading-img {
+    margin: 5em;
+}
+
+div {
+    text-align: justify;
+}
+
+.well {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.content > * {
+    border: none !important;
+}
+
+.pagination {
+    text-align: center;
+}
+
+#loading-pagination {
+    text-align: center;
+    margin-top: 1em;
+}
+
