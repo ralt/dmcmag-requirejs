@@ -100,18 +100,30 @@ define( [ 'helpers/xhr', 'helpers/by' ], function( xhr, By ) {
             e.stopPropagation()
 
             // Empty out the container, and run the callback
-            var container = By.id( 'container' )
+            var pagination = By.id( 'pagination' ),
+                first = By.id( 'first'),
+                last = By.id( 'last' );
 
-            // To empty it out, recursively remove its children
-            while ( container.firstChild ) {
-                container.removeChild( container.firstChild )
-            }
+            removeChildren( By.id( 'container' ) );
 
             // Don't forget to show the loading bar back
             By.id( 'loading-dmcs' ).hidden = false
 
             // Check for disabled class
+            if ( e.target !== first.nextElementSibling ) {
+                first.className = '';
+            }
+            else if ( e.target !== last.previousElementSibling ) {
+                last.className = '';
+            }
 
+            // Now remove the disabled class from the old number
+            [].forEach.call( By.class( 'disabled' ), function( el ) {
+                el.className = '';
+            } );
+
+            // And set it on the LI element
+            e.target.parentNode.className = 'disabled';
 
             // Now run the callback of the controller stored in the closure
             callback( e.target.textContent )
@@ -128,11 +140,107 @@ define( [ 'helpers/xhr', 'helpers/by' ], function( xhr, By ) {
         } )
     }
 
+    // Enable the search
+    function enableSearch( model, callback ) {
+        By.id( 'search' ).onkeypress = function( e ) {
+            if ( e.keyCode === 13 ) {
+                // If the value is empty, something's wrong so don't do
+                // anything
+                if ( this.value === '' ) {
+                    return;
+                }
+
+                // Show the loading dmcs icon
+                By.id( 'loading-dmcs' ).hidden = false;
+
+                // Hide the pagination loading link if it's not
+                var loading_pagination = By.id( 'loading-pagination' );
+                if ( !loading_pagination.hidden ) {
+                    loading_pagination.hidden = true;
+                }
+
+                // Remove the "reset search" button if it exists
+                var reset = By.id( 'reset' );
+                if ( reset ) {
+                    reset.parentNode.removeChild( reset );
+                }
+
+                // Empty out the list of DMCs
+                removeChildren( By.id( 'container' ) );
+
+                // Also empty out the pagination
+                removeChildren( By.id( 'pagination' ) );
+
+                // And call the callback
+                model( this.value, callback );
+            }
+        }
+    }
+
+    // Function to enable the "reset search" button
+    function enableResetSearch( callback ) {
+        var reset = document.createElement( 'input' ),
+            div = document.createElement( 'div' ),
+            search = By.id( 'search' );
+
+        div.className = 'input';
+        div.appendChild( reset );
+
+        reset.id = 'reset';
+        reset.type = 'button';
+        reset.value = 'Annuler la recherche';
+        reset.onclick = function() {
+            // Remove the results list
+            removeChildren( By.id( 'container' ) );
+
+            // Remove the button itself
+            this.parentNode.removeChild( this );
+
+            // Show the loading icon
+            By.id( 'loading-dmcs' ).hidden = false;
+
+            // And call the callback (init from the controller)
+            callback();
+        }
+
+        search.parentNode.insertBefore( div, search.nextElementSibling );
+    }
+
+    // Display an error
+    function displayError( error ) {
+        var el = document.createElement( 'div' ),
+            close = document.createElement( 'a' ),
+            search = By.id( 'search' );
+
+        // Stop the loading if there is an error
+        By.id( 'loading-dmcs' ).hidden = true;
+
+        close.className = 'close';
+        close.href = '#';
+        close.innerHTML = '&times;';
+        el.appendChild( close );
+
+        el.className = 'alert alert-error';
+        el.appendChild( document.createTextNode( error ) );
+
+        search.parentNode.insertBefore( el, search );
+    }
+
+    // Utility function to remove children
+    function removeChildren( el ) {
+        while ( el.firstChild ) {
+            el.removeChild( el.firstChild );
+        }
+    }
+
     // Return the necessary functions
     return {
         render: render,
         addPagination: addPagination,
-        enablePagination: enablePagination
+        enablePagination: enablePagination,
+        enableSearch: enableSearch,
+        enableResetSearch: enableResetSearch,
+        displayError: displayError
     }
 } )
 

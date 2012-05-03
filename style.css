@@ -1,7 +1,3 @@
-body {
-    text-align: center;
-}
-
 .title {
     margin: 1em;
     cursor: pointer;
@@ -15,21 +11,25 @@ div {
     text-align: justify;
 }
 
-.well {
-    text-align: center;
-    margin-top: 1em;
-}
-
 .content > * {
     border: none !important;
 }
 
-.pagination {
+body,
+.well,
+.pagination,
+#loading-pagination,
+#search,
+.input {
     text-align: center;
 }
 
+.well,
 #loading-pagination {
-    text-align: center;
     margin-top: 1em;
+}
+
+#search {
+    width: 50%;
 }
 

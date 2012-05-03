@@ -1,7 +1,7 @@
 define( function() {
     // Init function that enables the DOM event handlers
     function init() {
-        document.body.onclick = function( e ) {
+        document.body.addEventListener( 'click', function( e ) {
             var target = e.target
             if ( !!~target.className.indexOf( 'title' ) ) {
                 var nel = target.nextElementSibling,
@@ -13,7 +13,7 @@ define( function() {
                 } )
                 nel.hidden = !nel.hidden
             }
-        }
+        }, false );
     }
 
     return {

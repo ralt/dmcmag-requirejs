@@ -86,9 +86,21 @@ define( [ 'helpers/xhr' ], function( xhr ) {
         return url
     }
 
+    // Function to get the search results
+    function getSearch( value, callback ) {
+        xhr( {
+            method: 'GET',
+            url: '/dmcmag/ajax/title/' + value,
+            complete: function( data, xhrObject ) {
+                callback( JSON.parse( data ) );
+            }
+        } );
+    }
+
     return {
         getAll: getAll,
-        getOne: getOne
+        getOne: getOne,
+        getSearch: getSearch
     }
 } )
 

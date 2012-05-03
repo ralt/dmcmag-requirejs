@@ -4,14 +4,18 @@ define( [ 'models/dmc', 'views/dmc' ], function( dmcModel, dmcView ) {
         // Load the DMCs from page 1
         load( 1 )
 
-        // And load the pagination
+        // Load the pagination
         enablePagination()
+
+        // Load the search
+        enableSearch();
     }
 
     // Load the DMCs
     function load( page ) {
         // Load the first 20 DMCs
         dmcModel.getAll( page, function( dmcs ) {
+
             // For each of them, get their title/body
             dmcs.forEach( getOne )
         })
@@ -55,6 +59,16 @@ define( [ 'models/dmc', 'views/dmc' ], function( dmcModel, dmcView ) {
                 }
             } )
         } () )
+    }
+
+    // Function to enable the search
+    function enableSearch() {
+        dmcView.enableSearch( dmcModel.getSearch, function( results ) {
+            results.forEach( getOne );
+
+            // And don't forget to enable the reset search button
+            dmcView.enableResetSearch( init );
+        } );
     }
 
     return {
