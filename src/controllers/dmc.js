@@ -13,6 +13,7 @@ define( [ 'models/dmc', 'views/dmc' ], function( dmcModel, dmcView ) {
 
     // Load the DMCs
     function load( page ) {
+        page = page || 1;
         // Load the first 20 DMCs
         dmcModel.getAll( page, function( dmcs ) {
 
@@ -67,7 +68,7 @@ define( [ 'models/dmc', 'views/dmc' ], function( dmcModel, dmcView ) {
             results.forEach( getOne );
 
             // And don't forget to enable the reset search button
-            dmcView.enableResetSearch( init );
+            dmcView.enableResetSearch( load );
         } );
     }
 

@@ -168,8 +168,8 @@ define( [ 'helpers/xhr', 'helpers/by' ], function( xhr, By ) {
                 // Empty out the list of DMCs
                 removeChildren( By.id( 'container' ) );
 
-                // Also empty out the pagination
-                removeChildren( By.id( 'pagination' ) );
+                // Hide the pagination
+                pagination.hidden = true;
 
                 // And call the callback
                 model( this.value, callback );
@@ -199,8 +199,9 @@ define( [ 'helpers/xhr', 'helpers/by' ], function( xhr, By ) {
             // Remove the text from the search field
             By.id( 'search' ).value = '';
 
-            // Show the loading icon
+            // Show the loading icons
             By.id( 'loading-dmcs' ).hidden = false;
+            By.id( 'pagination' ).hidden = false;
 
             // And call the callback (init from the controller)
             callback();
