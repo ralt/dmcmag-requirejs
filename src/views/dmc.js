@@ -196,6 +196,9 @@ define( [ 'helpers/xhr', 'helpers/by' ], function( xhr, By ) {
             // Remove the button itself
             this.parentNode.removeChild( this );
 
+            // Remove the text from the search field
+            this.value = '';
+
             // Show the loading icon
             By.id( 'loading-dmcs' ).hidden = false;
 
